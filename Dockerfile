@@ -9,6 +9,7 @@ ENV MIX_ENV "prod"
 RUN apk --update add --no-cache --virtual .build-deps wget ca-certificates && \
     apk add --no-cache \
       make \
+      gcc \
       erlang \
       erlang-crypto \
       erlang-syntax-tools \
