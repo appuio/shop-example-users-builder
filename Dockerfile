@@ -3,13 +3,13 @@ FROM alpine:3.5
 
 # specify the elixir version
 ENV ELIXIR_VERSION 1.4.2
-ENV MIX_ENV "prod"
+ENV MIX_ENV prod
 
 # install erlang and elixir
 RUN apk --update add --no-cache --virtual .build-deps wget ca-certificates && \
     apk add --no-cache \
       make \
-      gcc \
+      g++ \
       erlang \
       erlang-crypto \
       erlang-syntax-tools \
