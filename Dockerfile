@@ -8,6 +8,7 @@ ENV MIX_ENV "prod"
 # install erlang and elixir
 RUN apk --update add --no-cache --virtual .build-deps wget ca-certificates && \
     apk add --no-cache \
+      make \
       erlang \
       erlang-crypto \
       erlang-syntax-tools \
