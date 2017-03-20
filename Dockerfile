@@ -1,16 +1,15 @@
 # extend centos
 FROM centos:7
 
+# workaround for missing locale
+ENV LC_ALL en_US.UTF-8
+
 # specify the erlang version
 ENV ERLANG_VERSION 19.3-1.el7.centos
-ENV LC_ALL=en_US.UTF-8
 
 # install utilities and erlang
 RUN set -x && \
-    # workaround for https://github.com/CentOS/sig-cloud-instance-images/issues/71
-    # localedef -i en_US -f UTF-8 en_US.UTF-8 && \
     yum install -y epel-release unzip wget && \
-    yum update && \
     wget http://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm && \
     rpm -Uvh erlang-solutions-1.0-1.noarch.rpm && \
     yum install -y erlang-$ERLANG_VERSION
