@@ -1,40 +1,26 @@
-# extend alpine
-FROM alpine:3.5
+# extend centos
+FROM centos:7
+
+# specify the erlang version
+ENV ERLANG_VERSION 19.3-1.el7.centos
+
+# install erlang
+RUN set -x && \
+  yum install -y epel-release wget && \
+  yum update && \
+  wget http://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm && \
+  rpm -Uvh erlang-solutions-1.0-1.noarch.rpm && \
+  yum install -y erlang-$ERLANG_VERSION
 
 # specify the elixir version
 ENV ELIXIR_VERSION 1.4.2
-ENV MIX_ENV prod
 
-# install erlang and elixir
-RUN apk --update add --no-cache --virtual .build-deps wget ca-certificates && \
-    apk add --no-cache \
-      make \
-      g++ \
-      erlang \
-      erlang-crypto \
-      erlang-syntax-tools \
-      erlang-parsetools \
-      erlang-inets \
-      erlang-ssl \
-      erlang-public-key \
-      erlang-eunit \
-      erlang-asn1 \
-      erlang-sasl \
-      erlang-erl-interface \
-      erlang-dev && \
-    wget --no-check-certificate https://github.com/elixir-lang/elixir/releases/download/v${ELIXIR_VERSION}/Precompiled.zip && \
-    mkdir -p /opt/elixir-${ELIXIR_VERSION}/ && \
-    unzip Precompiled.zip -d /opt/elixir-${ELIXIR_VERSION}/ && \
-    rm Precompiled.zip && \
-    apk del .build-deps
+# install elixir
+RUN set -x  
 
 # add the elixir installation to path
-ENV PATH $PATH:/opt/elixir-${ELIXIR_VERSION}/bin
 
 # initialize hex and rebar
-RUN erl && \
-    mix local.hex --force && \
-    mix local.rebar --force
 
 # add a new dir for the app
 RUN mkdir /app
