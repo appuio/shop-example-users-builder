@@ -4,9 +4,9 @@ FROM centos:7
 # specify the erlang version
 ENV ERLANG_VERSION 19.3-1.el7.centos
 
-# install erlang
+# install utilities and erlang
 RUN set -x && \
-  yum install -y epel-release wget && \
+  yum install -y epel-release unzip wget && \
   yum update && \
   wget http://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm && \
   rpm -Uvh erlang-solutions-1.0-1.noarch.rpm && \
@@ -16,9 +16,15 @@ RUN set -x && \
 ENV ELIXIR_VERSION 1.4.2
 
 # install elixir
-RUN set -x  
+RUN set -x && \
+  mkdir /usr/bin/elixir && \
+  cd /usr/bin/elixir && \
+  wget --no-check-certificate https://github.com/elixir-lang/elixir/releases/download/v${ELIXIR_VERSION}/Precompiled.zip && \
+  unzip Precompiled.zip && \
+  rm Precompiled.zip
 
 # add the elixir installation to path
+ENV PATH $PATH:/usr/bin/elixir/bin
 
 # initialize hex and rebar
 
