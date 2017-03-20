@@ -9,10 +9,19 @@ ENV ERLANG_VERSION 19.3-1.el7.centos
 
 # install utilities and erlang
 RUN set -x && \
-    yum install -y epel-release unzip wget && \
+    yum install -y \
+        epel-release \
+        gcc \
+        gcc-c++ \
+        make \
+        openssl-devel \
+        ncurses-devel \
+        unzip \
+        wget && \
     wget http://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm && \
     rpm -Uvh erlang-solutions-1.0-1.noarch.rpm && \
-    yum install -y erlang-$ERLANG_VERSION
+    yum install -y esl-erlang && \
+    yum clean all
 
 # specify the elixir version
 ENV ELIXIR_VERSION 1.4.2
