@@ -38,8 +38,8 @@ RUN erl && \
     mix local.rebar --force
 
 # add a new dir for the app
-RUN mkdir /app
-WORKDIR /app
+RUN mkdir -p /app/source
+WORKDIR /app/source
 
 # run shell as default command
 CMD ["/bin/sh"]
